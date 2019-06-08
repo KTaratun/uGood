@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "217735948547",
+    "firebase_url": "https://ugood-aca12.firebaseio.com",
+    "project_id": "ugood-aca12",
+    "storage_bucket": "ugood-aca12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217735948547:android:6bed9d6388f81729",
+        "android_client_info": {
+          "package_name": "com.example.kurt.ugood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217735948547-31is4e0hb72m2gq0pf74vqkcmftp8kte.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kurt.ugood",
+            "certificate_hash": "db9af89dd1a427481da78400db1d53131480e603"
+          }
+        },
+        {
+          "client_id": "217735948547-i4h3uqbd2662k06alnvqpd6f8gq7rv4s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCALxJvX8hJHzbLMKgThxyZNfdrg4rheQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217735948547-i4h3uqbd2662k06alnvqpd6f8gq7rv4s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
