@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="app_name">uGood</string>
+    <string name="home_icon">home</string>
+    <string name="mental_icon">mental</string>
+    <string name="success_icon">success</string>
+    <string name="physical_icon">physical</string>
+    <string name="social_icon">social</string>
+    <string name="username">Username</string>
+    <string name="appTitle">uGood</string>
+    <string name="confirm">Confirm</string>
+    <string name="user_and_email">Username or Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="example">Example Text</string>
+    <string name="email">Email</string>
+
+</resources>
