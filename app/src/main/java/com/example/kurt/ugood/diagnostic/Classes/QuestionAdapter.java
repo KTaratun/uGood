@@ -1,4 +1,4 @@
-package com.example.kurt.ugood.Activities;
+package com.example.kurt.ugood.diagnostic.Classes;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -19,17 +19,17 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
     private List<Question> questionList;
 
     public QuestionAdapter(Activity context, List<Question> questionList){
-        super(context, R.layout.activity_diagnostic, questionList);
+        super(context, R.layout.diagnostic_activity, questionList);
         this.context = context;
         this.questionList = questionList;
     }
 
-    //@androidx.annotation.NonNull
+    @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
 
-        View view = inflater.inflate(R.layout.question_list, null, true);
+        View view = inflater.inflate(R.layout.diagnostic_question_list, parent, true);
 
         TextView question = view.findViewById((R.id.questionText));
 

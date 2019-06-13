@@ -1,4 +1,4 @@
-package com.example.kurt.ugood.Activities;
+package com.example.kurt.ugood.diagnostic.Classes;
 
 public class Question {
     private String Question;
