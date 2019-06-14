@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.kurt.ugood.login.LoginActivity;
@@ -47,6 +48,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
     private EditText username, email, password, passConfirm;
     private TextView errorMessage;
     private Button confirmButton;
+    private ProgressBar loadingProgress;
 
     private FirebaseAuth fbAuth;
 
@@ -101,7 +103,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
         password = view.findViewById(R.id.passText);
         passConfirm = view.findViewById(R.id.passConfirmText);
         errorMessage = view.findViewById(R.id.errorMessage);
-
+        loadingProgress = view.findViewById(R.id.progressBar);
 
         confirmButton = view.findViewById(R.id.confirmButton);
 
@@ -158,6 +160,9 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
                 if (task.isSuccessful())
                 {
                     errorMessage.setText(getString(R.string.regSuccess));
+
+                    loadingProgress.setVisibility(View.VISIBLE);
+                    confirmButton.setVisibility(View.INVISIBLE);
 
                     String userId = fbAuth.getCurrentUser().getUid();
                     DatabaseReference currentUserDB = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);

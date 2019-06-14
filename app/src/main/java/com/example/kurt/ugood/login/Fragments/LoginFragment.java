@@ -120,6 +120,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful())
                         {
+                            loadingProgress.setVisibility(View.VISIBLE);
+                            loginButton.setVisibility(View.INVISIBLE);
                             errorMessage.setText(getString(R.string.logSuccess));
 
                             startActivity(intent);
@@ -151,6 +153,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         userPassword = view.findViewById(R.id.passText);
         forgotPass = view.findViewById(R.id.forgotPass);
         errorMessage = view.findViewById(R.id.errorMessage);
+
+        loadingProgress = view.findViewById(R.id.progressBar);
+        loadingProgress.setVisibility(View.INVISIBLE);
 
         loginButton.setOnClickListener(this);
         forgotPass.setOnClickListener(this);
