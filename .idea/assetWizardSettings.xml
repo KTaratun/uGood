@@ -33,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_school_black_24dp" />
-                            <entry key="sourceFile" value="C:\Users\Kurt" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_heart_icon_deselected" />
+                            <entry key="sourceFile" value="C:\Users\Kurt\Downloads\Heart_Icon_Deselected.svg" />
                           </map>
                         </option>
                       </PersistentState>

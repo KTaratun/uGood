@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class FirebaseFunctions {
@@ -51,6 +52,36 @@ public class FirebaseFunctions {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     favQuote.setText(dataSnapshot.getValue(String.class));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+    static public void GetContentByIndex(FirebaseAuth FBAuth, final TextView targetContent, final int Index)
+    {
+        DatabaseReference DBRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference quoteRef;
+
+        if (FBAuth.getCurrentUser() != null)
+        {
+            quoteRef = DBRef.child("Quotes");
+
+            quoteRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int num = (int) dataSnapshot.getChildrenCount();
+
+                    Iterator<DataSnapshot> dbSnap = dataSnapshot.getChildren().iterator();
+
+                    for (int i = 0; i < Index; i++)
+                        dbSnap.next();
+
+                    targetContent.setText(dbSnap.next().getValue(String.class));
                 }
 
                 @Override

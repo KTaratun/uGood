@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:autoSizeTextType="uniform"
+        android:padding="20dp"/>
+
+    <ImageButton
+        android:id="@+id/heart"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/content"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/crown"
+        android:background="@drawable/ic_heart_icon_deselected" />
+
+    <ImageButton
+        android:id="@+id/crown"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleY="1.4"
+        android:layout_below="@id/content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/ic_crown"/>
+
+</RelativeLayout>

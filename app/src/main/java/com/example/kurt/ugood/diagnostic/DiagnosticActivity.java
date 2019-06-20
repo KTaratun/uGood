@@ -3,6 +3,8 @@ package com.example.kurt.ugood.diagnostic;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.kurt.ugood.diagnostic.Classes.Question;
@@ -21,6 +23,7 @@ public class DiagnosticActivity extends AppCompatActivity {
 
     DatabaseReference databaseQuestions;
     List<Question> questionList;
+    Button backButton;
 
     ListView questionView;
 
@@ -33,6 +36,14 @@ public class DiagnosticActivity extends AppCompatActivity {
         questionList = new ArrayList<>();
 
         databaseQuestions = FirebaseDatabase.getInstance().getReference();
+
+        backButton = (Button) findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

@@ -29,7 +29,7 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
 
-        View view = inflater.inflate(R.layout.diagnostic_question_list, parent, true);
+        View view = inflater.inflate(R.layout.diagnostic_question_list, parent, false);
 
         TextView question = view.findViewById((R.id.questionText));
 

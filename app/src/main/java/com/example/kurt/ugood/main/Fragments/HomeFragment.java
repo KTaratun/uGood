@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.example.kurt.ugood.R;
 import com.example.kurt.ugood.diagnostic.DiagnosticActivity;
+import com.example.kurt.ugood.explore.ExploreActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +22,7 @@ import com.example.kurt.ugood.diagnostic.DiagnosticActivity;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +31,8 @@ public class HomeFragment extends Fragment{
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Button diagnosticButton, exploreButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,18 +72,14 @@ public class HomeFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment_home, container, false);
 
-        // Diagnostic button
-        Button checkInStartButton = view.findViewById(R.id.button_diagnostic);
-        checkInStartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DiagnosticActivity.class);
-                startActivity(intent);
-            }
-        });
+        diagnosticButton = view.findViewById(R.id.button_diagnostic);
+        diagnosticButton.setOnClickListener(this);
+
+        exploreButton = view.findViewById(R.id.button_explore);
+        exploreButton.setOnClickListener(this);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.main_fragment_home, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,6 +104,20 @@ public class HomeFragment extends Fragment{
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == diagnosticButton)
+        {
+            Intent intent = new Intent(getActivity(), DiagnosticActivity.class);
+            startActivity(intent);
+        }
+        else if (v == exploreButton)
+        {
+            Intent intent = new Intent(getActivity(), ExploreActivity.class);
+            startActivity(intent);
+        }
     }
 
     /**
