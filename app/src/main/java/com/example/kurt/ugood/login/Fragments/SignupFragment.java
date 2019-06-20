@@ -104,6 +104,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
         passConfirm = view.findViewById(R.id.passConfirmText);
         errorMessage = view.findViewById(R.id.errorMessage);
         loadingProgress = view.findViewById(R.id.progressBar);
+        loadingProgress.setVisibility(View.INVISIBLE);
 
         confirmButton = view.findViewById(R.id.confirmButton);
 
@@ -169,6 +170,11 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
 
                     Map newPost = new HashMap();
                     newPost.put("name", username.getText().toString());
+
+                    DatabaseReference DBRef = FirebaseDatabase.getInstance().getReference();
+
+                    String quote = DBRef.child("Users").child(fbAuth.getCurrentUser().getUid()).child("favorite quote").toString();
+                    newPost.put("favorite quote", quote);
 
                     currentUserDB.setValue(newPost);
 

@@ -1,4 +1,4 @@
-package com.example.kurt.ugood;
+package com.example.kurt.ugood.firebase;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;

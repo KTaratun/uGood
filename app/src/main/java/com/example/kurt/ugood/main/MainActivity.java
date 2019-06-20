@@ -1,31 +1,29 @@
 package com.example.kurt.ugood.main;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.kurt.ugood.diagnostic.DiagnosticActivity;
+import com.example.kurt.ugood.firebase.FirebaseFunctions;
+import com.example.kurt.ugood.ProfileActivity;
 import com.example.kurt.ugood.main.Fragments.HomeFragment;
-import com.example.kurt.ugood.main.Fragments.MentalFragment;
-import com.example.kurt.ugood.main.Fragments.PhysicalFragment;
-import com.example.kurt.ugood.main.Fragments.SocialFragment;
-import com.example.kurt.ugood.main.Fragments.SuccessFragment;
+import com.example.kurt.ugood.main.Fragments.MindFragment;
+import com.example.kurt.ugood.main.Fragments.BodyFragment;
+import com.example.kurt.ugood.main.Fragments.SpiritFragment;
 import com.example.kurt.ugood.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements HomeFragment.OnFragmentInteractionListener{
 
     TextView name;
     FirebaseAuth fbAuth;
@@ -35,40 +33,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        name = findViewById(R.id.username);
+
         fbAuth = FirebaseAuth.getInstance();
-        DatabaseReference DBRef = FirebaseDatabase.getInstance().getReference();
-
-        DatabaseReference userNameRef;
-        if (fbAuth.getCurrentUser() != null)
-        {
-            userNameRef = DBRef.child("Users").child(fbAuth.getCurrentUser().getUid()).child("name");
-
-            userNameRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    name = findViewById(R.id.username);
-                    name.setText(dataSnapshot.getValue(String.class));
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
+        FirebaseFunctions.GetUserName(fbAuth, name);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         // Sets the home fragment as the first fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+        FragmentManager fM = getSupportFragmentManager();
+        fM.beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
 
-        Button checkInStartButton = findViewById(R.id.button_diagnostic);
-        checkInStartButton.setOnClickListener(new View.OnClickListener() {
+        fM.executePendingTransactions();
+
+        // Profile Bar button
+        ConstraintLayout profileBarButton = findViewById(R.id.status_bar);
+        profileBarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DiagnosticActivity.class);
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -84,19 +69,18 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
                             break;
-                        case R.id.nav_mental:
-                            selectedFragment = new MentalFragment();
+                        case R.id.nav_mind:
+                            selectedFragment = new MindFragment();
                             break;
-                        case R.id.nav_success:
-                            selectedFragment = new SuccessFragment();
+                        case R.id.nav_body:
+                            selectedFragment = new BodyFragment();
                             break;
-                        case R.id.nav_physical:
-                            selectedFragment = new PhysicalFragment();
-                            break;
-                        case R.id.nav_social:
-                            selectedFragment = new SocialFragment();
+                        case R.id.nav_spirit:
+                            selectedFragment = new SpiritFragment();
                             break;
                     }
+
+                    getSupportFragmentManager().executePendingTransactions();
 
                     if (selectedFragment != null)
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -105,4 +89,9 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

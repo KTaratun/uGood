@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 
 import com.example.kurt.ugood.R;
 
-public class SocialFragment extends Fragment {
+public class SpiritFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment_social, container, false);
+        return inflater.inflate(R.layout.main_fragment_spirit, container, false);
     }
 }

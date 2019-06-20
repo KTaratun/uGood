@@ -4,12 +4,18 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.kurt.ugood"
-        minSdkVersion 26
-        targetSdkVersion 28
+        minSdkVersion 16
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        lintOptions {
+
+            checkReleaseBuilds false
+
+        }
     }
     buildTypes {
         release {

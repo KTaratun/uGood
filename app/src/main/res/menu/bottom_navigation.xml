@@ -7,23 +7,18 @@
         android:title="@string/home_icon" />
 
     <item
-        android:id="@+id/nav_mental"
-        android:icon="@drawable/ic_mood_black_24dp"
-        android:title="@string/mental_icon" />
+        android:id="@+id/nav_mind"
+        android:icon="@drawable/ic_school_black_24dp"
+        android:title="@string/mind_icon" />
 
     <item
-        android:id="@+id/nav_success"
-        android:icon="@drawable/ic_attach_money_black_24dp"
-        android:title="@string/success_icon" />
-
-    <item
-        android:id="@+id/nav_physical"
+        android:id="@+id/nav_body"
         android:icon="@drawable/ic_local_dining_black_24dp"
-        android:title="@string/physical_icon" />
+        android:title="@string/body_icon" />
 
     <item
-        android:id="@+id/nav_social"
-        android:icon="@drawable/ic_people_black_24dp"
-        android:title="@string/social_icon" />
+        android:id="@+id/nav_spirit"
+        android:icon="@drawable/ic_mood_black_24dp"
+        android:title="@string/spirit_icon" />
 
 </menu>

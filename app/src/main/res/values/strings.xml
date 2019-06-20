@@ -2,6 +2,7 @@
 
     <string name="app_name">uGood</string>
     <string name="back">Back</string>
+    <string name="body_icon">body</string>
     <string name="confirm">Confirm</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="email">Email</string>
@@ -18,14 +19,18 @@
     <string name="home_icon">home</string>
     <string name="logSuccess">logged in Successfully</string>
     <string name="login">Log in</string>
-    <string name="mental_icon">mental</string>
+    <string name="mind_icon">mind</string>
     <string name="password">Password</string>
-    <string name="physical_icon">physical</string>
     <string name="regSuccess">Registered Successfully</string>
     <string name="sendPassReset">Reset Password</string>
     <string name="signup">Don\'t have an account? Sign up here</string>
-    <string name="social_icon">social</string>
-    <string name="success_icon">success</string>
+    <string name="spirit_icon">spirit</string>
     <string name="username">Username</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="settings">settings</string>
+    <string name="completedDays">Calender days</string>
+    <string name="longestStreak">Longest Streak</string>
+    <string name="totalDays">Total Days</string>
+    <string name="favorites">Favorites</string>
 
 </resources>

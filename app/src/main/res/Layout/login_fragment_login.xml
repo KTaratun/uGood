@@ -26,8 +26,7 @@
         android:autofillHints="@string/password"
         android:inputType="textPassword"
         android:layout_centerHorizontal="true"
-        android:layout_alignTop="@id/emailText"
-        android:layout_marginVertical="50dp"/>
+        android:layout_below="@id/emailText"/>
 
     <Button
         android:id="@+id/loginButton"
@@ -37,8 +36,8 @@
         android:layout_marginBottom="8dp"
         android:text="@string/login"
         android:layout_centerHorizontal="true"
-        android:layout_alignTop="@id/passText"
-        android:layout_marginVertical="70dp"/>
+        android:layout_below="@id/passText"
+        android:layout_marginVertical="30dp"/>
 
     <TextView
         android:id="@+id/forgotPass"
@@ -48,8 +47,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/forgotPass"
         android:layout_centerHorizontal="true"
-        android:layout_alignTop="@id/loginButton"
-        android:layout_marginVertical="80dp"/>
+        android:layout_below="@id/loginButton"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -65,7 +63,6 @@
         android:layout_height="wrap_content"
         android:text=""
         android:layout_centerHorizontal="true"
-        android:layout_alignTop="@id/forgotPass"
-        android:layout_marginVertical="50dp"/>
+        android:layout_below="@id/forgotPass"/>
 
 </RelativeLayout>
