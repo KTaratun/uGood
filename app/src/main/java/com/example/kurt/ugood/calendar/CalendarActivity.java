@@ -1,10 +1,12 @@
 package com.example.kurt.ugood.calendar;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -12,11 +14,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
 
 import com.example.kurt.ugood.R;
-import com.example.kurt.ugood.firebase.FirebaseFunctions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,15 +29,16 @@ public class CalendarActivity extends AppCompatActivity {
     private HwAdapter hwAdapter;
     private TextView tv_month;
     private FirebaseAuth FBAuth;
-
+    private Button back, graph;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_activity);
 
-        FBAuth = FirebaseAuth.getInstance();
+        SetUpButtons();
 
+        FBAuth = FirebaseAuth.getInstance();
         HomeCollection.date_collection_arr=new ArrayList<HomeCollection>();
 
         GetRecords(FBAuth);
@@ -150,6 +150,26 @@ public class CalendarActivity extends AppCompatActivity {
                 ((HwAdapter) parent.getAdapter()).getPositionList(selectedGridDate, CalendarActivity.this);
             }
 
+        });
+    }
+
+    private void SetUpButtons()
+    {
+        back = (Button) findViewById(R.id.backButton);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        graph = (Button) findViewById(R.id.graphButton);
+        graph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarActivity.this, GraphActivity.class);
+                startActivity(intent);
+            }
         });
     }
 }

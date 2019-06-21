@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.kurt.ugood.firebase.FirebaseFunctions;
-import com.example.kurt.ugood.ProfileActivity;
+import com.example.kurt.ugood.profile.ProfileActivity;
 import com.example.kurt.ugood.main.Fragments.HomeFragment;
 import com.example.kurt.ugood.main.Fragments.MindFragment;
 import com.example.kurt.ugood.main.Fragments.BodyFragment;
