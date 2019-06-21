@@ -15,8 +15,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.kurt.ugood.ForgotPasswordActivity;
-import com.example.kurt.ugood.login.LoginActivity;
+import com.example.kurt.ugood.login.ForgotPasswordActivity;
 import com.example.kurt.ugood.main.MainActivity;
 import com.example.kurt.ugood.R;
 import com.google.android.gms.tasks.OnCompleteListener;

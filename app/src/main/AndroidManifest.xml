@@ -26,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".login.ForgotPasswordActivity" />
 
         <service android:name=".firebase.MyFirebaseInstanceIDService">
             <intent-filter>
@@ -46,7 +46,8 @@
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme" />
-        <activity android:name=".explore.ExploreActivity"></activity>
+        <activity android:name=".explore.ExploreActivity" />
+        <activity android:name=".calendar.CalendarActivity" />
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.example.kurt.ugood.firebase;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 
+import com.example.kurt.ugood.calendar.HomeCollection;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

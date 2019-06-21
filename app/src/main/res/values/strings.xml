@@ -32,5 +32,6 @@
     <string name="longestStreak">Longest Streak</string>
     <string name="totalDays">Total Days</string>
     <string name="favorites">Favorites</string>
+    <string name="title_activity_calendar_item">calendar_item</string>
 
 </resources>

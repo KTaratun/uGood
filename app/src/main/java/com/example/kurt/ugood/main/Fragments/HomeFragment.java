@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.kurt.ugood.calendar.CalendarActivity;
 import com.example.kurt.ugood.R;
 import com.example.kurt.ugood.diagnostic.DiagnosticActivity;
 import com.example.kurt.ugood.explore.ExploreActivity;
@@ -32,7 +33,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private String mParam1;
     private String mParam2;
 
-    private Button diagnosticButton, exploreButton;
+    private Button diagnosticButton, exploreButton, calenderButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,6 +79,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         exploreButton = view.findViewById(R.id.button_explore);
         exploreButton.setOnClickListener(this);
 
+        calenderButton = view.findViewById(R.id.button_calender);
+        calenderButton.setOnClickListener(this);
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -116,6 +120,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         else if (v == exploreButton)
         {
             Intent intent = new Intent(getActivity(), ExploreActivity.class);
+            startActivity(intent);
+        }
+        else if (v == calenderButton)
+        {
+            Intent intent = new Intent(getActivity(), CalendarActivity.class);
             startActivity(intent);
         }
     }
