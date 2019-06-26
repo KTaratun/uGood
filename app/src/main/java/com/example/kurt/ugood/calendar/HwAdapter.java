@@ -20,11 +20,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.GregorianCalendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Map;
 
 public class HwAdapter extends BaseAdapter {
 
@@ -47,12 +49,12 @@ public class HwAdapter extends BaseAdapter {
 
     private ArrayList<String> items;
     public static List<String> day_string;
-    public ArrayList<HomeCollection>  date_collection_arr;
+    public Map<String, List<HomeCollection>> date_collection_arr;
     private String gridvalue;
     private ListView listTeachers;
     private ArrayList<Dialogpojo> alCustom=new ArrayList<Dialogpojo>();
 
-    public HwAdapter(Activity context, GregorianCalendar monthCalendar,ArrayList<HomeCollection> date_collection_arr) {
+    public HwAdapter(Activity context, GregorianCalendar monthCalendar,Map<String, List<HomeCollection>> date_collection_arr) {
         this.date_collection_arr=date_collection_arr;
         HwAdapter.day_string = new ArrayList<String>();
         Locale.setDefault(Locale.US);
@@ -188,42 +190,61 @@ public class HwAdapter extends BaseAdapter {
     public void setEventView(View v,int pos,TextView txt){
 
         int len=HomeCollection.date_collection_arr.size();
+        Iterator it = HomeCollection.date_collection_arr.entrySet().iterator();
+        int len1=day_string.size();
+
         for (int i = 0; i < len; i++) {
-            HomeCollection cal_obj=HomeCollection.date_collection_arr.get(i);
-            String date=cal_obj.Date;
-            int len1=day_string.size();
-            if (len1>pos) {
+            Map.Entry pair = (Map.Entry)it.next();
+            List<HomeCollection> cal_obj=(List<HomeCollection>) pair.getValue();
+            Iterator dateIt = cal_obj.iterator();
+            int dateLen = cal_obj.size();
 
-                if (day_string.get(pos).equals(date)) {
-                    if ((Integer.parseInt(gridvalue) > 1) && (pos < firstDay)) {
+            for (int j = 0; j < dateLen; j++)
+            {
+                HomeCollection homeCol = (HomeCollection)dateIt.next();
+                String date=homeCol.Date;
 
-                    } else if ((Integer.parseInt(gridvalue) < 7) && (pos > 28)) {
+                if (len1>pos) {
+                    if (day_string.get(pos).equals(date)) {
+                        if ((Integer.parseInt(gridvalue) > 1) && (pos < firstDay)) {
 
-                    } else {
-                        v.setBackgroundColor(Color.parseColor("#343434"));
-                        v.setBackgroundResource(R.drawable.ic_panorama_fish_eye_black_24dp);
-                        txt.setTextColor(Color.parseColor("#696969"));
+                        } else if ((Integer.parseInt(gridvalue) < 7) && (pos > 28)) {
+
+                        } else {
+                            v.setBackgroundColor(Color.parseColor("#343434"));
+                            v.setBackgroundResource(R.drawable.ic_panorama_fish_eye_black_24dp);
+                            txt.setTextColor(Color.parseColor("#696969"));
+                        }
+
                     }
-
                 }
-            }}
+            }
+        }
     }
 
     public void getPositionList(String date,final Activity act){
 
-        //boolean found = false;
-
         int len= HomeCollection.date_collection_arr.size();
+        Iterator it = HomeCollection.date_collection_arr.entrySet().iterator();
+
         JSONArray jbarrays=new JSONArray();
         for (int j=0; j<len; j++){
-            if (HomeCollection.date_collection_arr.get(j).Date.equals(date)){
+            Map.Entry pair = (Map.Entry)it.next();
+            List<HomeCollection> cal_obj=(List<HomeCollection>) pair.getValue();
+            Iterator dateIt = cal_obj.iterator();
+            int dateLen = cal_obj.size();
+
+            for (int k = 0; k < dateLen; k++)
+            {
+                HomeCollection homeCol = (HomeCollection)dateIt.next();
+
                 HashMap<String, String> maplist = new HashMap<String, String>();
-                maplist.put("title",HomeCollection.date_collection_arr.get(j).Title);
-                maplist.put("mood",HomeCollection.date_collection_arr.get(j).Mood);
-                maplist.put("content",HomeCollection.date_collection_arr.get(j).Content);
+                maplist.put("title",homeCol.Title);
+                maplist.put("mood",homeCol.Mood);
+                maplist.put("content",homeCol.Content);
                 JSONObject json1 = new JSONObject(maplist);
                 jbarrays.put(json1);
-                //found = true;
+
             }
         }
 
@@ -241,8 +262,6 @@ public class HwAdapter extends BaseAdapter {
             });
             dialogs.show();
         }
-
-        //return found;
     }
 
     private ArrayList<Dialogpojo> getMatchList(String detail) {

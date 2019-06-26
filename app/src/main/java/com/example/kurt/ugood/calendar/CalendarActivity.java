@@ -39,7 +39,6 @@ public class CalendarActivity extends AppCompatActivity {
         SetUpButtons();
 
         FBAuth = FirebaseAuth.getInstance();
-        HomeCollection.date_collection_arr=new ArrayList<HomeCollection>();
 
         GetRecords(FBAuth);
     }
@@ -79,16 +78,23 @@ public class CalendarActivity extends AppCompatActivity {
             quoteRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for(DataSnapshot recordSnapshot : dataSnapshot.getChildren()){
+                    for(DataSnapshot recordSnapshot : dataSnapshot.getChildren())
+                        for(DataSnapshot dateSnapshot : recordSnapshot.getChildren())
+                        {
+                            HomeCollection homC = new HomeCollection();
+                            homC.setContent(dateSnapshot.child("Content").getValue().toString());
+                            homC.setDate(dateSnapshot.child("Date").getValue().toString());
+                            homC.setMood(dateSnapshot.child("Mood").getValue().toString());
+                            homC.setTitle(dateSnapshot.child("Title").getValue().toString());
 
-                        HomeCollection homC = new HomeCollection();
-                        homC.setContent(recordSnapshot.child("Content").getValue().toString());
-                        homC.setDate(recordSnapshot.child("Date").getValue().toString());
-                        homC.setMood(recordSnapshot.child("Mood").getValue().toString());
-                        homC.setTitle(recordSnapshot.child("Title").getValue().toString());
+                            String[] dateKeyElements = homC.getDate().split("-");
+                            String dateKey = dateKeyElements[1] + "-" + dateKeyElements[2];
 
-                        HomeCollection.date_collection_arr.add(homC);
-                    }
+                            if (!HomeCollection.date_collection_arr.containsKey(dateKey))
+                                HomeCollection.date_collection_arr.put(dateKey, new ArrayList<HomeCollection>());
+
+                            HomeCollection.date_collection_arr.get(dateKey).add(homC);
+                        }
 
                     ContinueCreate();
                 }

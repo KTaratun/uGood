@@ -1,6 +1,9 @@
 package com.example.kurt.ugood.calendar;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HomeCollection {
     public String Date="";
@@ -8,7 +11,7 @@ public class HomeCollection {
     public String Content="";
     public String Mood="";
 
-    public static ArrayList<HomeCollection> date_collection_arr;
+    public static Map<String, List<HomeCollection>> date_collection_arr = new HashMap<String, List<HomeCollection>>();
 
     public HomeCollection(){}
 
