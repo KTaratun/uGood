@@ -36,6 +36,8 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         RadioButton option1 = view.findViewById((R.id.radio_button1));
         RadioButton option2 = view.findViewById((R.id.radio_button2));
         RadioButton option3 = view.findViewById((R.id.radio_button3));
+        RadioButton option4 = view.findViewById((R.id.radio_button4));
+        RadioButton option5 = view.findViewById((R.id.radio_button5));
 
         Question quest = questionList.get(position);
 
@@ -44,6 +46,8 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         option1.setText(quest.getOption1());
         option2.setText(quest.getOption2());
         option3.setText(quest.getOption3());
+        option4.setText(quest.getOption4());
+        option5.setText(quest.getOption5());
 
         return view;
     }

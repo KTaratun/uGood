@@ -1,5 +1,6 @@
 package com.example.kurt.ugood.profile;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -71,6 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
                 FirebaseAuth fbAuth = FirebaseAuth.getInstance();
                 fbAuth.signOut();
                 startActivity(new Intent(SettingsActivity.this, LoginActivity.class)); //Go back to home page
+                finish();
             }
         });
     }

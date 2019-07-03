@@ -43,5 +43,8 @@
     <string name="week">Week</string>
     <string name="month">Month</string>
     <string name="year">Year</string>
+    <string name="explore">Explore</string>
+    <string name="check_in">Check In</string>
+    <string name="activities">Activities</string>
 
 </resources>

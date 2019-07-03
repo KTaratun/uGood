@@ -1,39 +1,31 @@
-package com.example.kurt.ugood.main.Fragments;
+package com.example.kurt.ugood.main;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
-import com.example.kurt.ugood.calendar.CalendarActivity;
 import com.example.kurt.ugood.R;
 import com.example.kurt.ugood.diagnostic.DiagnosticActivity;
-import com.example.kurt.ugood.explore.ExploreActivity;
+import com.example.kurt.ugood.firebase.FirebaseFunctions;
+import com.example.kurt.ugood.profile.ProfileActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment implements View.OnClickListener{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private Button diagnosticButton, exploreButton, calenderButton;
+    private TextView name;
+    private FirebaseAuth fbAuth;
+    private Button diagnosticButton;
+    private ConstraintLayout profileBarButton;
+    private FirebaseFirestore ff = FirebaseFirestore.getInstance();
 
     private OnFragmentInteractionListener mListener;
 
@@ -41,46 +33,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment_home, container, false);
 
+        name = view.findViewById(R.id.username);
+        fbAuth = FirebaseAuth.getInstance();
+        FirebaseFunctions.GetUserName(fbAuth, name);
+
         diagnosticButton = view.findViewById(R.id.button_diagnostic);
         diagnosticButton.setOnClickListener(this);
 
-        exploreButton = view.findViewById(R.id.button_explore);
-        exploreButton.setOnClickListener(this);
-
-        calenderButton = view.findViewById(R.id.button_calender);
-        calenderButton.setOnClickListener(this);
+        // Profile Bar button
+        profileBarButton = view.findViewById(R.id.status_bar);
+        profileBarButton.setOnClickListener(this);
 
         // Inflate the layout for this fragment
         return view;
@@ -117,14 +85,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             Intent intent = new Intent(getActivity(), DiagnosticActivity.class);
             startActivity(intent);
         }
-        else if (v == exploreButton)
+        else if (v == profileBarButton)
         {
-            Intent intent = new Intent(getActivity(), ExploreActivity.class);
-            startActivity(intent);
-        }
-        else if (v == calenderButton)
-        {
-            Intent intent = new Intent(getActivity(), CalendarActivity.class);
+            Intent intent = new Intent(getActivity(), ProfileActivity.class);
             startActivity(intent);
         }
     }

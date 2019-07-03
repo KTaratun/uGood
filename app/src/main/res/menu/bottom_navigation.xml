@@ -7,18 +7,18 @@
         android:title="@string/home_icon" />
 
     <item
-        android:id="@+id/nav_mind"
-        android:icon="@drawable/ic_school_black_24dp"
-        android:title="@string/mind_icon" />
+        android:id="@+id/nav_calendar"
+        android:icon="@drawable/ic_grid_on_black_24dp"
+        android:title="@string/calendar" />
 
     <item
-        android:id="@+id/nav_body"
-        android:icon="@drawable/ic_local_dining_black_24dp"
-        android:title="@string/body_icon" />
+        android:id="@+id/nav_explore"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/explore" />
 
     <item
-        android:id="@+id/nav_spirit"
-        android:icon="@drawable/ic_mood_black_24dp"
-        android:title="@string/spirit_icon" />
+        android:id="@+id/nav_activities"
+        android:icon="@drawable/ic_assignment_black_24dp"
+        android:title="@string/activities" />
 
 </menu>

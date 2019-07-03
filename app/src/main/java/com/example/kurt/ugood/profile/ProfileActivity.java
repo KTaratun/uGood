@@ -40,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         fbAuth = FirebaseAuth.getInstance();
         FirebaseFunctions.GetUserName(fbAuth, userName);
-        FirebaseFunctions.GetRandomQuote(fbAuth, favoriteQuote);
+        //FirebaseFunctions.GetRandomQuote(fbAuth, favoriteQuote);
         //FirebaseFunctions.GetUserQuote(fbAuth, favoriteQuote);
         //FirebaseFunctions.GetUserStats(fbAuth, calenderDays, longestStreak, totalDays);
 
@@ -61,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        LoadImageFromFirebase();
+        //LoadImageFromFirebase();
     }
 
     private void LoadImageFromFirebase()

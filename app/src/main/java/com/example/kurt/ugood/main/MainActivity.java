@@ -13,30 +13,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.kurt.ugood.calendar.CalendarFragment;
+import com.example.kurt.ugood.explore.ExploreFragment;
 import com.example.kurt.ugood.firebase.FirebaseFunctions;
 import com.example.kurt.ugood.profile.ProfileActivity;
-import com.example.kurt.ugood.main.Fragments.HomeFragment;
-import com.example.kurt.ugood.main.Fragments.MindFragment;
-import com.example.kurt.ugood.main.Fragments.BodyFragment;
-import com.example.kurt.ugood.main.Fragments.SpiritFragment;
 import com.example.kurt.ugood.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
         implements HomeFragment.OnFragmentInteractionListener{
 
-    TextView name;
-    FirebaseAuth fbAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
-        name = findViewById(R.id.username);
-
-        fbAuth = FirebaseAuth.getInstance();
-        FirebaseFunctions.GetUserName(fbAuth, name);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -47,16 +37,6 @@ public class MainActivity extends AppCompatActivity
                 new HomeFragment()).commit();
 
         fM.executePendingTransactions();
-
-        // Profile Bar button
-        ConstraintLayout profileBarButton = findViewById(R.id.status_bar);
-        profileBarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -69,15 +49,15 @@ public class MainActivity extends AppCompatActivity
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
                             break;
-                        case R.id.nav_mind:
-                            selectedFragment = new MindFragment();
+                        case R.id.nav_calendar:
+                            selectedFragment = new CalendarFragment();
                             break;
-                        case R.id.nav_body:
-                            selectedFragment = new BodyFragment();
+                        case R.id.nav_explore:
+                            selectedFragment = new ExploreFragment();
                             break;
-                        case R.id.nav_spirit:
-                            selectedFragment = new SpiritFragment();
-                            break;
+                        //case R.id.nav_activities:
+                        //    selectedFragment = new SpiritFragment();
+                        //    break;
                     }
 
                     getSupportFragmentManager().executePendingTransactions();

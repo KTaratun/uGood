@@ -10,14 +10,19 @@ import android.widget.ListView;
 import com.example.kurt.ugood.diagnostic.Classes.Question;
 import com.example.kurt.ugood.diagnostic.Classes.QuestionAdapter;
 import com.example.kurt.ugood.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class DiagnosticActivity extends AppCompatActivity {
 
@@ -26,6 +31,7 @@ public class DiagnosticActivity extends AppCompatActivity {
     Button backButton;
 
     ListView questionView;
+    private CollectionReference cR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,28 +56,28 @@ public class DiagnosticActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        DatabaseReference databaseQuestionsref = databaseQuestions.child("Questions");
+        cR = FirebaseFirestore.getInstance().collection("Questions");
 
-        databaseQuestionsref.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        cR.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    questionList.clear();
 
-                        questionList.clear();
+                    List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                    Collections.reverse(myListOfDocuments);
+                    Random rand = new Random();
+                    DocumentSnapshot randDoc = myListOfDocuments.get(rand.nextInt(myListOfDocuments.size()));
 
-                        for(DataSnapshot questionSnapshot : dataSnapshot.getChildren()){
-                            Question quest = questionSnapshot.getValue(Question.class);
+                    Question quest = new Question(randDoc.get("Question").toString(), randDoc.get("Option1").toString(),
+                            randDoc.get("Option2").toString(), randDoc.get("Option3").toString(),
+                            randDoc.get("Option4").toString(), randDoc.get("Option5").toString());
 
-                            questionList.add(quest);
-                        }
-
-                        QuestionAdapter adapter = new QuestionAdapter(DiagnosticActivity.this, questionList);
-                        questionView.setAdapter(adapter);
-
+                    questionList.add(quest);
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                QuestionAdapter adapter = new QuestionAdapter(DiagnosticActivity.this, questionList);
+                questionView.setAdapter(adapter);
             }
         });
     }
