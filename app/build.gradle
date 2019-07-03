@@ -37,7 +37,7 @@ dependencies {
             { exclude group: "com.android.support" }
     implementation('com.firebaseui:firebase-ui-auth:4.3.1')
             { exclude group: "com.android.support" }
-    implementation 'com.google.firebase:firebase-database:18.0.0'
+    implementation 'com.google.firebase:firebase-database:17.0.0'
     implementation ('com.google.firebase:firebase-storage:17.0.0')
             { exclude group: "com.android.support" }
 
