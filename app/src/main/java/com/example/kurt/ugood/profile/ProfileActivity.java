@@ -1,5 +1,6 @@
 package com.example.kurt.ugood.profile;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -61,10 +62,18 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        //LoadImageFromFirebase();
+        LoadImageFromFirebase();
     }
 
-    private void LoadImageFromFirebase()
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LoadImageFromFirebase();
+    }
+
+
+    public void LoadImageFromFirebase()
     {
         // Reference to an image file in Cloud Storage
         String curUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();

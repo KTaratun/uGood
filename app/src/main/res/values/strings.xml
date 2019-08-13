@@ -46,5 +46,11 @@
     <string name="explore">Explore</string>
     <string name="check_in">Check In</string>
     <string name="activities">Activities</string>
+    <string name="CalendarInfo">Tap on day to see its detail</string>
+    <string name="S">S</string>
+    <string name="M">M</string>
+    <string name="T">T</string>
+    <string name="W">W</string>
+    <string name="F">F</string>
 
 </resources>

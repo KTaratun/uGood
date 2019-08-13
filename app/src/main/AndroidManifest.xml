@@ -52,9 +52,7 @@
             android:name=".profile.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme" />
-        <activity android:name=".explore.ExploreFragment" />
         <activity android:name=".profile.SettingsActivity" />
-        <activity android:name=".calendar.GraphFragment"></activity>
     </application>
 
 </manifest>

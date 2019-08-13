@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.kurt.ugood.R;
@@ -31,11 +33,24 @@ public class ExploreContentAdapter extends ArrayAdapter<ExploreContent> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
-        String str = getItem(position).getContent();
+        String str = "";
+        if (getItem(position).getContent() != null)
+            str = getItem(position).getContent();
 
-        TextView content = (TextView) convertView.findViewById((R.id.content));
-
+        TextView content = convertView.findViewById((R.id.content));
         content.setText(str);
+
+        ViewGroup.LayoutParams params = content.getLayoutParams();
+        int textSize = content.getText().length();
+        int textMod = textSize / 25;
+        int siz = 175 + (75 * textMod);
+        params.height = siz;
+        content.requestLayout();
+
+        //ViewGroup.LayoutParams params = convertView.getLayoutParams();
+        //int siz = 50 + (30 * (content.getText().length() % 25));
+        //params.height = siz;
+        //convertView.requestLayout();
 
         return convertView;
     }

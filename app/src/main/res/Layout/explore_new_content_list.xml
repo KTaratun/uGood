@@ -5,28 +5,32 @@
 
     <TextView
         android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:autoSizeTextType="uniform"
-        android:padding="20dp"/>
+        android:layout_width="300dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:text="@string/example"
+        android:padding="10dp"/>
 
     <ImageButton
         android:id="@+id/heart"
+        android:contentDescription="@null"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@id/content"
-        android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@id/crown"
+        android:layout_marginEnd="20dp"
+        android:layout_toStartOf="@id/crown"
         android:background="@drawable/ic_heart_icon_deselected" />
 
     <ImageButton
         android:id="@+id/crown"
+        android:contentDescription="@null"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleY="1.4"
         android:layout_below="@id/content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="60dp"
         android:background="@drawable/ic_crown"/>
 
 </RelativeLayout>

@@ -1,24 +1,17 @@
 package com.example.kurt.ugood.main;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
-import com.example.kurt.ugood.calendar.CalendarFragment;
+import com.example.kurt.ugood.calendar.Fragments.CalenderFragment;
 import com.example.kurt.ugood.explore.ExploreFragment;
-import com.example.kurt.ugood.firebase.FirebaseFunctions;
-import com.example.kurt.ugood.profile.ProfileActivity;
 import com.example.kurt.ugood.R;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
         implements HomeFragment.OnFragmentInteractionListener{
@@ -50,13 +43,13 @@ public class MainActivity extends AppCompatActivity
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_calendar:
-                            selectedFragment = new CalendarFragment();
+                            selectedFragment = new CalenderFragment();
                             break;
                         case R.id.nav_explore:
                             selectedFragment = new ExploreFragment();
                             break;
                         //case R.id.nav_activities:
-                        //    selectedFragment = new SpiritFragment();
+                        //    selectedFragment = new ScheduleFragment();
                         //    break;
                     }
 

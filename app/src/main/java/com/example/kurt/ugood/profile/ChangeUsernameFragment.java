@@ -2,16 +2,23 @@ package com.example.kurt.ugood.profile;
 
 import android.os.Bundle;
 import android.app.DialogFragment;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.kurt.ugood.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,12 +56,24 @@ public class ChangeUsernameFragment extends DialogFragment {
                 FirebaseAuth fbAuth = FirebaseAuth.getInstance();
 
                 String userId = fbAuth.getCurrentUser().getUid();
-                DatabaseReference currentUserDB = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+                FirebaseFirestore ff = FirebaseFirestore.getInstance();
 
                 Map newPost = new HashMap();
                 newPost.put("name", newName.getText().toString());
 
-                currentUserDB.setValue(newPost);
+                ff.collection("Users").document(userId).set(newPost)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e){
+                                Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
+                                Log.d("error", e.toString());
+                            }
+                        });
 
                 getDialog().dismiss();
             }

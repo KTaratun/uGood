@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".calendar.GraphFragment">
+    tools:context=".calendar.Fragments.GraphFragment">
 
     <RelativeLayout
         android:id="@+id/title_bar"
@@ -15,9 +15,9 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:text="@string/back"/>
 
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/graph"
-            android:textSize="30dp"/>
+            android:textSize="30sp"/>
 
     </RelativeLayout>
 
@@ -40,22 +40,24 @@
 
     <ImageButton
         android:id="@+id/left_button"
+        android:contentDescription="@null"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/ic_chevron_left_black_24dp"
         android:layout_below="@id/graph"/>
 
     <ImageButton
         android:id="@+id/right_button"
+        android:contentDescription="@null"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/ic_chevron_right_black_24dp"
         android:layout_below="@id/graph"/>
@@ -66,16 +68,16 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/week"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:layout_alignTop="@id/left_button"/>
 
     <Button
         android:id="@+id/week_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:text="@string/week"
         android:layout_below="@id/week_month_year"/>
@@ -94,9 +96,9 @@
         android:id="@+id/year_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="15dp"
         android:text="@string/year"
         android:layout_below="@id/week_month_year"/>
