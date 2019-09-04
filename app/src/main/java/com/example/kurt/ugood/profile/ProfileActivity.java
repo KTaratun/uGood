@@ -1,29 +1,22 @@
 package com.example.kurt.ugood.profile;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.kurt.ugood.R;
 import com.example.kurt.ugood.firebase.FirebaseFunctions;
 import com.example.kurt.ugood.firebase.GlideApp;
-import com.example.kurt.ugood.main.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import java.net.URI;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -68,10 +61,8 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         LoadImageFromFirebase();
     }
-
 
     public void LoadImageFromFirebase()
     {
@@ -83,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
         newTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                ImageView image = (ImageView)findViewById(R.id.profilePic);
+                ImageView image = findViewById(R.id.profileActivityPic);
 
                 // Download directly from StorageReference using Glide
                 // (See MyAppGlideModule for Loader registration)

@@ -1,4 +1,4 @@
-package com.example.kurt.ugood.login;
+package com.example.kurt.ugood.login.Activities;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;

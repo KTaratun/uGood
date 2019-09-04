@@ -1,6 +1,5 @@
 package com.example.kurt.ugood.profile;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kurt.ugood.R;
-import com.example.kurt.ugood.login.LoginActivity;
+import com.example.kurt.ugood.utilities.ChangeUserPictureFragment;
+import com.example.kurt.ugood.utilities.ChangeUsernameFragment;
+import com.example.kurt.ugood.login.Activities.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

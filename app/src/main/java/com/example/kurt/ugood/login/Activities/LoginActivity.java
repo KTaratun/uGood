@@ -1,4 +1,4 @@
-package com.example.kurt.ugood.login;
+package com.example.kurt.ugood.login.Activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.kurt.ugood.login.Fragments.LoginFragment;
 import com.example.kurt.ugood.login.Fragments.SignupFragment;
 import com.example.kurt.ugood.R;
+import com.example.kurt.ugood.login.PagerAdapter;
 import com.example.kurt.ugood.main.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,9 +35,10 @@ public class LoginActivity extends AppCompatActivity
     private void AutoSignIn()
     {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         if (user != null) {
             // User is signed in
-            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            Intent i = new Intent(LoginActivity.this, AdditionalInfoActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }

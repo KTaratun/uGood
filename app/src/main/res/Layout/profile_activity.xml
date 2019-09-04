@@ -63,7 +63,7 @@
                 android:textSize="30sp" />
 
             <ImageView
-                android:id="@+id/profilePic"
+                android:id="@+id/profileActivityPic"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_below="@id/userNameTextProfile"
@@ -74,7 +74,7 @@
                 android:id="@+id/favoriteQuote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/profilePic"
+                android:layout_below="@id/profileActivityPic"
                 android:padding="20dp"
                 android:text="@string/example"
                 android:textSize="20sp" />

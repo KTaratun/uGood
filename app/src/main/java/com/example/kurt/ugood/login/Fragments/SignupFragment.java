@@ -14,36 +14,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.kurt.ugood.login.LoginActivity;
-import com.example.kurt.ugood.main.MainActivity;
+import com.example.kurt.ugood.login.Activities.AdditionalInfoActivity;
 import com.example.kurt.ugood.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SignupFragment extends Fragment implements View.OnClickListener{
-    private EditText username, email, password, passConfirm;
+    private EditText email, password, passConfirm;
     private TextView errorMessage;
     private Button confirmButton;
     private ProgressBar loadingProgress;
 
     private FirebaseAuth fbAuth;
     private OnFragmentInteractionListener mListener;
-    private FirebaseFirestore ff = FirebaseFirestore.getInstance();
 
     public SignupFragment() {
         // Required empty public constructor
@@ -58,7 +47,6 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
 
         fbAuth = FirebaseAuth.getInstance();
 
-        username = view.findViewById(R.id.usernameText);
         email = view.findViewById(R.id.emailText);
         password = view.findViewById(R.id.passText);
         passConfirm = view.findViewById(R.id.passConfirmText);
@@ -99,8 +87,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if (username.getText() != null && username.getText().toString().length() == 0 ||
-                email.getText() != null && email.getText().toString().length() == 0 ||
+        if (email.getText() != null && email.getText().toString().length() == 0 ||
                 password.getText() != null && password.getText().toString().length() == 0)
             errorMessage.setText(getString(R.string.errorMessageNEEDTOFILL));
         else if (!password.getText().toString().equals(passConfirm.getText().toString()))
@@ -125,27 +112,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
                     loadingProgress.setVisibility(View.VISIBLE);
                     confirmButton.setVisibility(View.INVISIBLE);
 
-                    String userId = fbAuth.getCurrentUser().getUid();
-                    //DatabaseReference currentUserDB = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-
-                    Map newPost = new HashMap();
-                    newPost.put("name", username.getText().toString());
-
-                    ff.collection("Users").document(userId).set(newPost)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    }
-                                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e){
-                            Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
-                            Log.d("error", e.toString());
-                        }
-                    });
-
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Intent intent = new Intent(getActivity(), AdditionalInfoActivity.class);
                     startActivity(intent);
                 }
                 else

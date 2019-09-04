@@ -25,14 +25,15 @@
         android:appComponentFactory="whateverString">
         <activity android:name=".main.MainActivity" />
         <activity android:name=".diagnostic.DiagnosticActivity" />
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".login.Activities.AdditionalInfoActivity"/>
+        <activity android:name=".login.Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.ForgotPasswordActivity" />
+        <activity android:name=".login.Activities.ForgotPasswordActivity" />
 
         <service android:name=".firebase.MyFirebaseInstanceIDService">
             <intent-filter>
