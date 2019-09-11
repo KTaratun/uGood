@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("home");
         setContentView(R.layout.main_activity);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -40,9 +41,13 @@ public class MainActivity extends AppCompatActivity
 
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
+                            getSupportActionBar().setTitle("home");
+                            //getActionBar().setTitle("Home");
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_calendar:
+                            getSupportActionBar().setTitle("Calendar");
+                            //getActionBar().setTitle("Calendar");
                             selectedFragment = new CalenderFragment();
                             break;
                         case R.id.nav_explore:
@@ -66,5 +71,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public void setNavBarTitle(String Title){
+        getSupportActionBar().setTitle(Title);
     }
 }

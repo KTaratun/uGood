@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +36,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment implements View.OnClickListener{
+public class LoginFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -86,10 +89,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
+        userEmail.setError("test error");
+
         if (v == loginButton)
         {
-            if (userEmail.getText() != null && userEmail.getText().toString().length() == 0 ||
-                    userPassword.getText() != null && userPassword.getText().toString().length() == 0)
+            if (userEmail.getText().toString().trim().isEmpty() || userPassword.getText().toString().trim().isEmpty())
                 errorMessage.setText(getString(R.string.errorMessageNEEDTOFILL));
             else
                 LogAttempt();
@@ -141,6 +145,35 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 });
     }
 
+
+    //Built in REGEX Check
+    private boolean isValidEmail(CharSequence target){
+        if(TextUtils.isEmpty(target)){
+            return false;
+        }else{
+            return Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
+
+
+    //MARK: On Focus Change
+    @Override
+    public void onFocusChange(View view, boolean hasFocus) {
+        switch (view.getId()){
+            case R.id.emailText:
+                if (userEmail.getText().toString().trim().isEmpty()){
+                    return;
+                }
+
+                if(!hasFocus){
+                    String email = userEmail.getText().toString();
+                    if (!isValidEmail(email)){
+                        userEmail.setError("Email is not correctly formatted");
+                    }
+                }
+        }
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -159,7 +192,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         loginButton.setOnClickListener(this);
         forgotPass.setOnClickListener(this);
 
+        userEmail.setOnFocusChangeListener(this);
+
         return view;
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
 
     }
 

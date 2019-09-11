@@ -7,7 +7,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="email">Email</string>
     <string name="errorMessageINVALIDEMAILORPASSWORD">Invalid Email</string>
-    <string name="errorMessageNEEDTOFILL">You need to fill each text field</string>
+    <string name="errorMessageNEEDTOFILL">Please do not leave text field empty</string>
     <string name="errorMessagePASSNEEDTOMATCH">Passwords need to match</string>
     <string name="errorMessageUSERDOESNOTEXIST">User does not exist</string>
     <string name="errorMessageUSEREXISTS">User Exists</string>
