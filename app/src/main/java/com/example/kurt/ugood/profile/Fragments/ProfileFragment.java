@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.kurt.ugood.R;
+import com.example.kurt.ugood.classes.User;
 import com.example.kurt.ugood.firebase.GlideApp;
 import com.example.kurt.ugood.profile.ProfileActivity;
 import com.example.kurt.ugood.profile.SettingsActivity;
@@ -30,6 +32,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
@@ -37,13 +41,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
+    private static final String TAG = "ProfileFragment";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     TextView userName, favoriteQuote, calenderDays, longestStreak, totalDays;
-    ImageView ProfilePic;
+    CircleImageView ProfilePic;
     Button back, settings, favorites;
     FirebaseAuth fbAuth;
 
@@ -82,10 +86,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        //For now we can do it like this but im thinking it may be better to save the hole User object
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
-        String name = mSharedPreferences.getString("change_username", "");
-        userName.setText(name);
+        //Grabbing user info
+        User currentUser = User.retreiveUserObjectFromUserDefaults(getContext());
+        // currentUser.UpdateUserInfo();
+        userName.setText(currentUser.getUsername());
+        Log.i(TAG, "onActivityCreated:  + username" + currentUser.getUsername());
+        GlideApp.with(getContext() /* context */)
+                .load(currentUser.getProfilePic()).centerInside()
+                .into(ProfilePic);
     }
 
     @Override
@@ -132,10 +140,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //enabling back button
-        //((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        LoadImageFromFirebase();
+
+        //Grabbing user info
+        User currentUser = User.retreiveUserObjectFromUserDefaults(getContext());
+       // currentUser.UpdateUserInfo();
+        userName.setText(currentUser.getUsername());
+        Log.i(TAG, "onActivityCreated:  + username" + currentUser.getUsername());
+        GlideApp.with(getContext() /* context */)
+                .load(currentUser.getProfilePic()).centerInside()
+                .into(ProfilePic);
+
     }
+
 
 
     @Override

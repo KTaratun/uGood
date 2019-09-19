@@ -3,6 +3,7 @@ package com.example.kurt.ugood.profile.Fragments;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -11,9 +12,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.Preference;
-import android.support.v7.preference.PreferenceFragmentCompat;
+
+import com.example.kurt.ugood.login.Activities.LoginActivity;
+import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,15 +28,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+
 import com.example.kurt.ugood.R;
+import com.example.kurt.ugood.classes.User;
 import com.example.kurt.ugood.profile.SettingsActivity;
 import com.example.kurt.ugood.utilities.ChangeUserPictureFragment;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -52,10 +60,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private String mParam1;
     private String mParam2;
 
-    public static final int PICK_IMAGE = 1;
+    public static final int PICK_IMAGE = 11223;
     private StorageReference storageReference;
     private Uri filePath;
 
+    User currentUser;
     //UI
     EditTextPreference userNameET;
     //private OnFragmentInteractionListener mListener;
@@ -94,44 +103,34 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     @Override
-    public void onCreatePreferences(Bundle bundle, String s) {
-        addPreferencesFromResource(R.xml.settings);
+    public void onCreatePreferencesFix(@Nullable Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.settings, "settings");
         userNameET = (EditTextPreference) getPreferenceScreen().findPreference("change_username");
         userNameET.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newName) {
-               if (newName.toString().trim().isEmpty()){
-                   return false;
-                   //todo create toast to tell user that there username was not successful
-               }
-                FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+                if (newName.toString().trim().isEmpty()){
+                    return false;
+                    //todo create toast to tell user that there username was not successful
+                }
 
-                String userId = fbAuth.getCurrentUser().getUid();
-                FirebaseFirestore ff = FirebaseFirestore.getInstance();
+                currentUser.setUsername(newName.toString());
+                currentUser.UpdateUserInfo().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            currentUser.saveObjectInUserDefaults(getContext());
+                        }else{
 
-                Map newPost = new HashMap();
-                newPost.put("name", newName);
+                        }
+                    }
+                });
 
-                ff.collection("Users").document(userId).set(newPost)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e){
-                                Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
-                                Log.d("error", e.toString());
-                            }
-                        });
-
-               return true;
+                return true;
             }
         });
-
-      
     }
+
 
     @Override
     public void onResume() {
@@ -152,8 +151,61 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 Log.i(TAG, "onPreferenceTreeClick: " + name);
                 break;
             case "change_profile_pic":
-                DialogFragment changeName = new ChangeUserPictureFragment();
-                changeName.show(getActivity().getFragmentManager(), "ChangeUserPictureFragment");
+
+
+                AlertDialog.Builder newPicDialog = new AlertDialog.Builder(getContext()).setTitle("Change Profile Picture");
+                newPicDialog.setItems(new CharSequence[]
+                                {"Take Photo", "Choose From Gallery", "Cancel"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+                                switch (which) {
+                                    case 0:
+                                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                        intent.setType("image/*");
+                                        //Was having trouble here because i used getactivity().startActivityForResult
+                                        // ///this will make the activities  "onActivtiyResult" to go off instead of fragments
+                                        startActivityForResult(intent, PICK_IMAGE);
+
+
+                                        break;
+                                    case 1:
+                                        //Toast.makeText(context, "clicked 2", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 2:
+                                        //Toast.makeText(context, "clicked 3", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 3:
+                                        //Toast.makeText(context, "clicked 4", Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+                            }
+                        });
+                newPicDialog.show();
+
+//                //Changing to alert dialog alot easier to use instead of creating your own UI
+//                DialogFragment changeName = new ChangeUserPictureFragment();
+//                changeName.show(getActivity().getFragmentManager(), "ChangeUserPictureFragment");
+                break;
+            case "sign_out":
+                //Signing out of firebase
+                FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+                fbAuth.signOut();
+
+                //clearing shared preferences
+                SharedPreferences prefs = getContext().getSharedPreferences(
+                        "com.example.kurt.ugood", Context.MODE_PRIVATE);
+                prefs.edit().clear().commit();
+
+
+                Intent signOutIntent = new Intent(getContext(), LoginActivity.class);
+                //adding flags to make sure that all current activities are closed
+                signOutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                signOutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(signOutIntent); //Go back to home page
+                getActivity().finish();
+
                 break;
             default:
 
@@ -179,14 +231,35 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 progressDialog.show();
 
                 String curUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-                StorageReference FBStorageLocation = storageReference.child(curUserID).child("Profile Pic");
-                FBStorageLocation.putFile(filePath)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                storageReference = FirebaseStorage.getInstance().getReference();
+                final StorageReference userProfilePicStorageLocation = storageReference.child(curUserID);
+                final UploadTask uploadTask = userProfilePicStorageLocation.putFile(filePath);
+                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                progressDialog.dismiss();
-                                Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                                Task<Uri> urltask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                    @Override
+                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                        if(!task.isSuccessful()){
+                                            throw task.getException();
+                                        }
+                                        return userProfilePicStorageLocation.getDownloadUrl();
+                                    }
+                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        if(task.isSuccessful()){
+                                            Uri downloadUri = task.getResult();
+                                            currentUser.setProfilePic(downloadUri.toString());
+                                            currentUser.saveObjectInUserDefaults(getContext());
+                                            currentUser.UpdateUserInfo();
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -211,6 +284,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        currentUser = User.retreiveUserObjectFromUserDefaults(getContext());
 
 
     }

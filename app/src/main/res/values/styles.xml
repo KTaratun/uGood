@@ -14,6 +14,13 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="Preference.Theme" parent="@style/PreferenceFixTheme.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <!-- [...] -->
+    </style>
+
 <!--    <style name="PreferenceThemeOverlay" parent="Theme.AppCompat.Light">-->
 <!--    &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.kurt.ugood.R;
+import com.example.kurt.ugood.classes.User;
 import com.example.kurt.ugood.diagnostic.DiagnosticActivity;
 import com.example.kurt.ugood.firebase.FirebaseFunctions;
 import com.example.kurt.ugood.profile.ProfileActivity;
@@ -42,7 +44,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         name = view.findViewById(R.id.username);
         fbAuth = FirebaseAuth.getInstance();
-        FirebaseFunctions.GetUserName(fbAuth, name);
+
+        //FirebaseFunctions.GetUserName(fbAuth, name);
 
         diagnosticButton = view.findViewById(R.id.button_diagnostic);
         diagnosticButton.setOnClickListener(this);
@@ -58,6 +61,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+//        User currentUser = User.retreiveUserObjectFromUserDefaults(getContext());
+//
+//        name.setText(currentUser.getUsername());
+
+    }
+
+
+
+    public void createActionBar(){
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(R.layout.homepage_actionbar_layout, null);
+        //getActivity()
 
     }
 

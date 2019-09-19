@@ -17,16 +17,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.kurt.ugood.classes.User;
 import com.example.kurt.ugood.login.Activities.ForgotPasswordActivity;
 import com.example.kurt.ugood.main.MainActivity;
 import com.example.kurt.ugood.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,14 +93,59 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Vie
     @Override
     public void onClick(View v) {
 
-        userEmail.setError("test error");
+
 
         if (v == loginButton)
         {
-            if (userEmail.getText().toString().trim().isEmpty() || userPassword.getText().toString().trim().isEmpty())
-                errorMessage.setText(getString(R.string.errorMessageNEEDTOFILL));
-            else
-                LogAttempt();
+            if (userEmail.getText().toString().trim().isEmpty() || userPassword.getText().toString().trim().isEmpty()){
+                createToast(getString(R.string.errorMessageNEEDTOFILL));
+                //errorMessage.setText(getString(R.string.errorMessageNEEDTOFILL));
+                return;
+            }
+            if(!isValidEmail(userEmail.getText().toString())){
+                createToast("Email is not correctly formatted");
+                return;
+            }
+
+            final User user = new User(userEmail.getText().toString());
+            user.SignUserIn(userPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        loadingProgress.setVisibility(View.VISIBLE);
+                        loginButton.setVisibility(View.INVISIBLE);
+                        user.grabUsersData().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()){
+                                    DocumentSnapshot document = task.getResult();
+                                    if(document != null && document.exists()){
+                                        User user = document.toObject(User.class);
+                                        user.setUserID(document.getId());
+                                        user.saveObjectInUserDefaults(getContext());
+                                        errorMessage.setText(getString(R.string.logSuccess));
+                                        final Intent intent = new Intent(getActivity(), MainActivity.class);
+                                        startActivity(intent);
+                                    }else{
+
+                                    }
+                                }else{
+                                    if(task.getException() != null)
+                                    createToast(task.getException().getMessage());
+                                }
+                            }
+                        });
+
+                    }else{
+                        if(task.getException() != null){
+                            createToast(task.getException().getMessage());
+                        }
+
+                    }
+                }
+            });
+
+
         }
         else if (v == forgotPass)
             GoToForgotPassword();
@@ -108,10 +157,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Vie
         startActivity(intent);
     }
 
-    private void LogAttempt()
+    private void LogAttempt(User user)
     {
         if (getActivity() == null)
             return;
+
+
 
         final Intent intent = new Intent(getActivity(), MainActivity.class);
         String emailFinal = userEmail.getText().toString().trim();
@@ -153,6 +204,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Vie
         }else{
             return Patterns.EMAIL_ADDRESS.matcher(target).matches();
         }
+    }
+
+    private void createToast(String text){
+        Toast.makeText(getContext() , text, Toast.LENGTH_SHORT).show();
     }
 
 

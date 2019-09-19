@@ -27,13 +27,14 @@
                 android:text="@string/username"
                 android:textSize="30sp" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileActivityPic"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_below="@id/userNameTextProfile"
                 android:layout_centerHorizontal="true"
-                app:srcCompat="@mipmap/ic_launcher_round" />
+                android:src="@mipmap/ic_launcher_round"
+                />
 
             <TextView
                 android:id="@+id/favoriteQuote"
