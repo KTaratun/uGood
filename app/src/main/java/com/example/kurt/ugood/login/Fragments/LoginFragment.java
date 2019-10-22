@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +17,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.kurt.ugood.classes.User;
 import com.example.kurt.ugood.login.Activities.ForgotPasswordActivity;
 import com.example.kurt.ugood.main.MainActivity;
 import com.example.kurt.ugood.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +40,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment implements View.OnClickListener{
+public class LoginFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -86,13 +93,59 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
+
+
         if (v == loginButton)
         {
-            if (userEmail.getText() != null && userEmail.getText().toString().length() == 0 ||
-                    userPassword.getText() != null && userPassword.getText().toString().length() == 0)
-                errorMessage.setText(getString(R.string.errorMessageNEEDTOFILL));
-            else
-                LogAttempt();
+            if (userEmail.getText().toString().trim().isEmpty() || userPassword.getText().toString().trim().isEmpty()){
+                createToast(getString(R.string.errorMessageNEEDTOFILL));
+                //errorMessage.setText(getString(R.string.errorMessageNEEDTOFILL));
+                return;
+            }
+            if(!isValidEmail(userEmail.getText().toString())){
+                createToast("Email is not correctly formatted");
+                return;
+            }
+
+            final User user = new User(userEmail.getText().toString());
+            user.SignUserIn(userPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        loadingProgress.setVisibility(View.VISIBLE);
+                        loginButton.setVisibility(View.INVISIBLE);
+                        user.grabUsersData().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()){
+                                    DocumentSnapshot document = task.getResult();
+                                    if(document != null && document.exists()){
+                                        User user = document.toObject(User.class);
+                                        user.setUserID(document.getId());
+                                        user.saveObjectInUserDefaults(getContext());
+                                        errorMessage.setText(getString(R.string.logSuccess));
+                                        final Intent intent = new Intent(getActivity(), MainActivity.class);
+                                        startActivity(intent);
+                                    }else{
+
+                                    }
+                                }else{
+                                    if(task.getException() != null)
+                                    createToast(task.getException().getMessage());
+                                }
+                            }
+                        });
+
+                    }else{
+                        if(task.getException() != null){
+                            createToast(task.getException().getMessage());
+                        }
+
+                    }
+                }
+            });
+
+
         }
         else if (v == forgotPass)
             GoToForgotPassword();
@@ -104,41 +157,36 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         startActivity(intent);
     }
 
-    private void LogAttempt()
-    {
-        if (getActivity() == null)
-            return;
+    //Built in REGEX Check
+    private boolean isValidEmail(CharSequence target){
+        if(TextUtils.isEmpty(target)){
+            return false;
+        }else{
+            return Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
 
-        final Intent intent = new Intent(getActivity(), MainActivity.class);
-        String emailFinal = userEmail.getText().toString().trim();
-        String passFinal = userPassword.getText().toString().trim();
+    private void createToast(String text){
+        Toast.makeText(getContext() , text, Toast.LENGTH_SHORT).show();
+    }
 
-        fbAuth.signInWithEmailAndPassword(emailFinal, passFinal)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful())
-                        {
-                            loadingProgress.setVisibility(View.VISIBLE);
-                            loginButton.setVisibility(View.INVISIBLE);
-                            errorMessage.setText(getString(R.string.logSuccess));
 
-                            startActivity(intent);
-                        }
-                        else
-                        {
-                             try {
-                                 throw task.getException();
-                             } catch(FirebaseAuthInvalidUserException e) {
-                                 errorMessage.setText(getString(R.string.errorMessageUSERDOESNOTEXIST));
-                             } catch(FirebaseAuthInvalidCredentialsException e) {
-                                 errorMessage.setText(getString(R.string.errorMessageINVALIDEMAILORPASSWORD));
-                             } catch(Exception e) {
-                                 Log.e("ERROR: ", e.getMessage());
-                             }
-                        }
+    //MARK: On Focus Change
+    @Override
+    public void onFocusChange(View view, boolean hasFocus) {
+        switch (view.getId()){
+            case R.id.emailText:
+                if (userEmail.getText().toString().trim().isEmpty()){
+                    return;
+                }
+
+                if(!hasFocus){
+                    String email = userEmail.getText().toString();
+                    if (!isValidEmail(email)){
+                        userEmail.setError("Email is not correctly formatted");
                     }
-                });
+                }
+        }
     }
 
     @Override
@@ -159,15 +207,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         loginButton.setOnClickListener(this);
         forgotPass.setOnClickListener(this);
 
+        userEmail.setOnFocusChangeListener(this);
+
         return view;
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
     }
 
     @Override
@@ -186,6 +236,55 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         super.onDetach();
         mListener = null;
     }
+
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    //todo old log in method take out when ready
+    private void LogAttempt(User user)
+    {
+        if (getActivity() == null)
+            return;
+
+
+
+        final Intent intent = new Intent(getActivity(), MainActivity.class);
+        String emailFinal = userEmail.getText().toString().trim();
+        String passFinal = userPassword.getText().toString().trim();
+
+        fbAuth.signInWithEmailAndPassword(emailFinal, passFinal)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful())
+                        {
+                            loadingProgress.setVisibility(View.VISIBLE);
+                            loginButton.setVisibility(View.INVISIBLE);
+                            errorMessage.setText(getString(R.string.logSuccess));
+
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthInvalidUserException e) {
+                                errorMessage.setText(getString(R.string.errorMessageUSERDOESNOTEXIST));
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                errorMessage.setText(getString(R.string.errorMessageINVALIDEMAILORPASSWORD));
+                            } catch(Exception e) {
+                                Log.e("ERROR: ", e.getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
 
 
     /**

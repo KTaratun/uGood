@@ -7,26 +7,31 @@
 
     <EditText
         android:id="@+id/emailText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/email"
         android:autofillHints="@string/email"
         android:inputType="textEmailAddress"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
+        />
 
     <EditText
         android:id="@+id/passText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/password"
         android:autofillHints="@string/password"
         android:inputType="textPassword"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/emailText"/>
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@id/emailText" />
 
     <Button
         android:id="@+id/loginButton"

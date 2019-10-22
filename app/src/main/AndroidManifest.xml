@@ -53,7 +53,8 @@
             android:name=".profile.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme" />
-        <activity android:name=".profile.SettingsActivity" />
+        <activity android:name=".profile.SettingsActivity"
+            android:theme="@style/PreferenceFixTheme"/>
     </application>
 
 </manifest>

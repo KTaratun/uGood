@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profile.ProfileActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userNameTextProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_alignParentTop="true"
+                android:padding="10dp"
+                android:text="@string/username"
+                android:textSize="30sp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileActivityPic"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/userNameTextProfile"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_launcher_round"
+                />
+
+            <TextView
+                android:id="@+id/favoriteQuote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profileActivityPic"
+                android:padding="20dp"
+                android:text="@string/example"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/calenderDays"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/favoriteQuote"
+                android:layout_toLeftOf="@id/longestStreak"
+                android:gravity="center"
+                android:padding="9dp"
+                android:text="@string/completedDays"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/numberOfDays"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/calenderDays"
+                android:layout_alignLeft="@id/calenderDays"
+                android:layout_alignRight="@id/calenderDays"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/longestStreak"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/favoriteQuote"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:padding="9dp"
+                android:text="@string/longestStreak"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/streakNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/calenderDays"
+                android:layout_alignLeft="@id/longestStreak"
+                android:layout_alignRight="@id/longestStreak"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/totalDays"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/favoriteQuote"
+                android:layout_toRightOf="@id/longestStreak"
+                android:gravity="center"
+                android:padding="9dp"
+                android:text="@string/totalDays"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/totalNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/calenderDays"
+                android:layout_alignLeft="@id/totalDays"
+                android:layout_alignRight="@id/totalDays"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/favoriteQuotesButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/streakNum"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="@string/favorites"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>

@@ -19,18 +19,18 @@ android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/uGoodIcon"
             android:contentDescription="@null"
-            android:layout_width="157dp"
-            android:layout_height="120dp"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
             android:src="@drawable/proxy_duckduckgo_com"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:id="@+id/uGoodTitle"
