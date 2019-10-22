@@ -157,46 +157,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Vie
         startActivity(intent);
     }
 
-    private void LogAttempt(User user)
-    {
-        if (getActivity() == null)
-            return;
-
-
-
-        final Intent intent = new Intent(getActivity(), MainActivity.class);
-        String emailFinal = userEmail.getText().toString().trim();
-        String passFinal = userPassword.getText().toString().trim();
-
-        fbAuth.signInWithEmailAndPassword(emailFinal, passFinal)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful())
-                        {
-                            loadingProgress.setVisibility(View.VISIBLE);
-                            loginButton.setVisibility(View.INVISIBLE);
-                            errorMessage.setText(getString(R.string.logSuccess));
-
-                            startActivity(intent);
-                        }
-                        else
-                        {
-                             try {
-                                 throw task.getException();
-                             } catch(FirebaseAuthInvalidUserException e) {
-                                 errorMessage.setText(getString(R.string.errorMessageUSERDOESNOTEXIST));
-                             } catch(FirebaseAuthInvalidCredentialsException e) {
-                                 errorMessage.setText(getString(R.string.errorMessageINVALIDEMAILORPASSWORD));
-                             } catch(Exception e) {
-                                 Log.e("ERROR: ", e.getMessage());
-                             }
-                        }
-                    }
-                });
-    }
-
-
     //Built in REGEX Check
     private boolean isValidEmail(CharSequence target){
         if(TextUtils.isEmpty(target)){
@@ -260,13 +220,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Vie
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -283,6 +236,55 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Vie
         super.onDetach();
         mListener = null;
     }
+
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    //todo old log in method take out when ready
+    private void LogAttempt(User user)
+    {
+        if (getActivity() == null)
+            return;
+
+
+
+        final Intent intent = new Intent(getActivity(), MainActivity.class);
+        String emailFinal = userEmail.getText().toString().trim();
+        String passFinal = userPassword.getText().toString().trim();
+
+        fbAuth.signInWithEmailAndPassword(emailFinal, passFinal)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful())
+                        {
+                            loadingProgress.setVisibility(View.VISIBLE);
+                            loginButton.setVisibility(View.INVISIBLE);
+                            errorMessage.setText(getString(R.string.logSuccess));
+
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthInvalidUserException e) {
+                                errorMessage.setText(getString(R.string.errorMessageUSERDOESNOTEXIST));
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                errorMessage.setText(getString(R.string.errorMessageINVALIDEMAILORPASSWORD));
+                            } catch(Exception e) {
+                                Log.e("ERROR: ", e.getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
 
 
     /**

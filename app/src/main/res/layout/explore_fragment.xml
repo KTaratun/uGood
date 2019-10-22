@@ -28,10 +28,17 @@
 
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/contentList"
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_bar"/>
+        android:id="@+id/exploreContentRecyclerView"
+        android:layout_below="@+id/title_bar"
+        />
+
+<!--    <ListView-->
+<!--        android:id="@+id/contentList"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@id/title_bar"/>-->
 
 </RelativeLayout>

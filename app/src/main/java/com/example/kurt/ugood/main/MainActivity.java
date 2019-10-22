@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.kurt.ugood.calendar.Fragments.CalenderFragment;
 import com.example.kurt.ugood.classes.User;
-import com.example.kurt.ugood.classes.UserUpdatedDataHandler;
+import com.example.kurt.ugood.classes.Interfaces.UserUpdatedDataHandler;
 import com.example.kurt.ugood.explore.ExploreFragment;
 import com.example.kurt.ugood.R;
 import com.example.kurt.ugood.firebase.GlideApp;

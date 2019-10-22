@@ -18,13 +18,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kurt.ugood.classes.ProfilePicResultHandler;
+import com.example.kurt.ugood.classes.Interfaces.ProfilePicResultHandler;
 import com.example.kurt.ugood.classes.User;
 import com.example.kurt.ugood.login.Activities.AdditionalInfoActivity;
 import com.example.kurt.ugood.R;
 import com.example.kurt.ugood.main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +31,6 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.storage.UploadTask;
 
 public class SignupFragment extends Fragment implements View.OnClickListener{
     private EditText email, password, passConfirm, username;
