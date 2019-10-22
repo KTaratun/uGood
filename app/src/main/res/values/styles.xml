@@ -1,16 +1,37 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+
     </style>
 
     <style name="MyCustomTabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="Preference.Theme" parent="@style/PreferenceFixTheme.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <!-- [...] -->
+    </style>
+
+<!--    <style name="PreferenceThemeOverlay" parent="Theme.AppCompat.Light">-->
+<!--    &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+
+<!--    <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--    <item name="colorAccent">@color/colorPrimary</item>-->
+<!--        <item name="android:paddingLeft">5dp</item>-->
+<!--        <item name="android:paddingRight">5dp</item>-->
+
+<!--        <item name="android:dividerHeight">1dp</item>-->
+<!--    </style>-->
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

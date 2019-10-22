@@ -15,6 +15,7 @@ import com.example.kurt.ugood.R;
 import com.firebase.ui.auth.data.model.Resource;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ExploreContentAdapter extends ArrayAdapter<ExploreContent> {
 
@@ -55,3 +56,5 @@ public class ExploreContentAdapter extends ArrayAdapter<ExploreContent> {
         return convertView;
     }
 }
+
+
