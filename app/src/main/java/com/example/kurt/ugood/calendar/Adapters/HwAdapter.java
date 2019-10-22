@@ -216,6 +216,8 @@ public class HwAdapter extends BaseAdapter {
                             v.setBackgroundColor(Color.parseColor("#343434"));
                             v.setBackgroundResource(R.drawable.ic_panorama_fish_eye_black_24dp);
                             txt.setTextColor(Color.parseColor("#696969"));
+
+
                         }
 
                     }
@@ -233,6 +235,7 @@ public class HwAdapter extends BaseAdapter {
         for (int j=0; j<len; j++){
             Map.Entry pair = (Map.Entry)it.next();
             List<HomeCollection> cal_obj=(List<HomeCollection>) pair.getValue();
+
             Iterator dateIt = cal_obj.iterator();
             int dateLen = cal_obj.size();
 
