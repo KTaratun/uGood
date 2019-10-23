@@ -113,10 +113,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
             return;
         }
 
-        if(isValidEmail(email.getText().toString())){
-            createToast("Email is not correctly formatted");
-            return;
-        }
+//
 
         Loading(true);
         final User newUser = new User(username.getText().toString(), email.getText().toString());
