@@ -49,7 +49,7 @@ public class User {
     private String profilePic;
 
     //used transient keyword to ignore variable when parsing with GSON
-    private transient Date dateCreated = new Date();
+    private transient Date dateCreated; // = new Date();
 
     @Exclude
     private String UserID;
@@ -80,6 +80,7 @@ public class User {
     public User(String username, String email) {
         this.username = username;
         this.email = email;
+        this.dateCreated = new Date();
     }
 
     //When saving User object to shared preferences we use GSON to parse object unto string to be saved in sharedpreferences
@@ -165,6 +166,7 @@ public class User {
     public Task<Void> WriteNewUser(){
         return ff.collection("Users").document(this.UserID).set(this);
     }
+
     //Gson used to map our user info data. Gson is used so datecreated is not updated, the "transient"
     //keeps the DateCreated variable from being parsed into Map
     @Exclude
@@ -257,6 +259,7 @@ public class User {
                 "com.example.kurt.ugood", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
+
         Gson gson = new Gson();
         String json = gson.toJson(this);
         prefsEditor.putString("CurrentUser", json);
