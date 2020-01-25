@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity
     CircleImageView mProfilePic;
     TextView mUserName;
 
-
     //user Data
     User mCurrentUser;
     ListenerRegistration mUserInfoListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity
         createActionBar();
 
         mUserInfoListener = mCurrentUser.CheckForUserDataUpdates(this, this);
-
     }
 
     @Override
@@ -68,7 +67,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         updateCurrentActionBarWithUserData();
-
     }
 
     private void updateCurrentActionBarWithUserData(){

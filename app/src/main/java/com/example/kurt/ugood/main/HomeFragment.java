@@ -42,8 +42,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_fragment_home, container, false);
 
-        name = view.findViewById(R.id.username);
-        fbAuth = FirebaseAuth.getInstance();
+        //name = view.findViewById(R.id.username);
+        //fbAuth = FirebaseAuth.getInstance();
 
         //FirebaseFunctions.GetUserName(fbAuth, name);
 
@@ -51,8 +51,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         diagnosticButton.setOnClickListener(this);
 
         // Profile Bar button
-        profileBarButton = view.findViewById(R.id.status_bar);
-        profileBarButton.setOnClickListener(this);
+        //profileBarButton = view.findViewById(R.id.status_bar);
+        //profileBarButton.setOnClickListener(this);
 
         // Inflate the layout for this fragment
         return view;
